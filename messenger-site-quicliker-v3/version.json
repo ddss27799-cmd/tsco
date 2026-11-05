@@ -1,0 +1,14 @@
+{
+  "quik": {
+    "version": "1.1.0",
+    "url": "/quik/",
+    "force": false,
+    "notes": ""
+  },
+  "tsm": {
+    "version": "10.0.0",
+    "url": "/tsmesedjer/app.html",
+    "force": false,
+    "notes": ""
+  }
+}

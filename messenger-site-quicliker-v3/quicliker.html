@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b14"><title>Quicliker — TSCO</title>
+<style>
+:root{color-scheme:dark;--bg:#080b14;--panel:#12192b;--text:#f4f7ff;--muted:#9aa8c2;--line:rgba(157,180,226,.16);--cyan:#61e5ff;--violet:#9b8cff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font:16px/1.55 Inter,system-ui,sans-serif;background:radial-gradient(ellipse at 15% 0%,#3d74ff33,transparent 38%),radial-gradient(ellipse at 90% 15%,#9a5bff2b,transparent 35%),linear-gradient(160deg,#080b14,#0b1020 55%,#080b14)}
+.wrap{width:min(900px,calc(100% - 30px));margin:auto;padding:24px 0 50px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.brand{font-weight:900;letter-spacing:.15em}.back{color:#b9c8e6;text-decoration:none;border:1px solid var(--line);border-radius:12px;padding:9px 13px;font-size:13px}.back:hover{border-color:var(--cyan)}
+.hero{text-align:center;margin:35px 0 25px}.kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);font-weight:800}.hero h1{font-size:clamp(42px,9vw,70px);line-height:1;margin:10px 0;background:linear-gradient(100deg,#fff,#9ceeff,#b5a6ff);background-clip:text;color:transparent;letter-spacing:-.06em}.hero p{color:var(--muted);margin:0}
+.card{padding:clamp(17px,4vw,28px);border:1px solid #9b8cff55;border-radius:24px;background:linear-gradient(145deg,#171d36ee,#101629f2);box-shadow:0 18px 55px #0004}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}.stat{padding:13px 15px;border:1px solid var(--line);border-radius:14px;background:#080d1c88}.stat small{display:block;color:var(--muted);font-size:11px}.stat strong{font-size:clamp(18px,4vw,25px);font-variant-numeric:tabular-nums}
+.click{width:100%;min-height:100px;border:1px solid #b9f5ff88;border-radius:18px;background:linear-gradient(100deg,#38c9ec,#9b8cff);color:#07101c;font-size:25px;font-weight:950;letter-spacing:.06em;cursor:pointer;box-shadow:0 10px 30px #61e5ff22;transition:transform .12s,filter .12s}.click:hover{filter:brightness(1.1);transform:translateY(-2px)}.click:active{transform:scale(.985)}
+.shophead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:25px 0 12px}.shophead h2{font-size:18px;margin:0}.shophead span{font-size:11px;color:var(--muted)}
+.upgrades{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.upgrade{display:flex;align-items:center;gap:11px;text-align:left;padding:13px;border:1px solid var(--line);border-radius:15px;background:#ffffff08;color:var(--text);cursor:pointer;min-width:0}.upgrade:hover:not(:disabled){border-color:#61e5ff88;background:#61e5ff10}.upgrade:disabled{opacity:.42;cursor:not-allowed}.ico{font-size:23px}.upgrade b{display:block;font-size:13px}.upgrade small{display:block;color:var(--muted);font-size:11px}.upgrade em{margin-left:auto;color:#9ceeff;font-size:12px;font-style:normal;white-space:nowrap}
+.bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:17px;color:var(--muted);font-size:11px}.bottom button{border:0;background:none;color:#ff9abf;text-decoration:underline;cursor:pointer;font:inherit}
+@media(max-width:560px){.upgrades{grid-template-columns:1fr}.shophead{display:block}.shophead span{display:block;margin-top:3px}.bottom{align-items:flex-start;flex-direction:column}}
+</style></head>
+<body><div class="wrap">
+<header class="top"><div class="brand">TSCO</div><a class="back" href="index.html">← На главную</a></header>
+<div class="hero"><div class="kicker">Мини-игра TSCO</div><h1>Quicliker</h1><p>Кликай, покупай улучшения и построй свою империю очков!</p></div>
+<main class="card">
+<div class="stats"><div class="stat"><small>Твои очки</small><strong id="coins">0</strong></div><div class="stat"><small>За клик</small><strong id="power">1</strong></div><div class="stat"><small>В секунду</small><strong id="pps">0</strong></div></div>
+<button class="click" id="click" type="button">⚡ КЛИК!</button>
+<div class="shophead"><h2>Магазин улучшений</h2><span>12 улучшений для прокачки</span></div><div class="upgrades" id="upgrades"></div>
+<div class="bottom"><span id="message">Каждый клик приближает тебя к вершине!</span><button id="reset" type="button">Сбросить прогресс</button></div>
+</main></div>
+<script>
+const items=[
+{name:"Сильный палец",desc:"+1 очко за клик",icon:"👆",cost:15,kind:"power",value:1},
+{name:"Кофе для кликов",desc:"+5 очков за клик",icon:"☕",cost:100,kind:"power",value:5},
+{name:"Игровая мышь",desc:"+20 очков за клик",icon:"🖱️",cost:500,kind:"power",value:20},
+{name:"Механическая клавиатура",desc:"+75 очков за клик",icon:"⌨️",cost:1800,kind:"power",value:75},
+{name:"Золотой палец",desc:"+250 очков за клик",icon:"✨",cost:8000,kind:"power",value:250},
+{name:"Мини-бот",desc:"+1 очко в секунду",icon:"🤖",cost:50,kind:"auto",value:1},
+{name:"Ферма кликов",desc:"+5 очков в секунду",icon:"🏭",cost:250,kind:"auto",value:5},
+{name:"Серверная",desc:"+20 очков в секунду",icon:"🖥️",cost:1200,kind:"auto",value:20},
+{name:"Кибер-команда",desc:"+90 очков в секунду",icon:"👾",cost:6000,kind:"auto",value:90},
+{name:"Квантовый ИИ",desc:"+400 очков в секунду",icon:"🧠",cost:25000,kind:"auto",value:400},
+{name:"Космическая станция",desc:"+1800 очков в секунду",icon:"🚀",cost:120000,kind:"auto",value:1800},
+{name:"Мультивселенная",desc:"+9000 очков в секунду",icon:"🌌",cost:750000,kind:"auto",value:9000}
+];
+const fresh=()=>({coins:0,power:1,pps:0,owned:Array(items.length).fill(0)});
+let game=fresh();try{const s=JSON.parse(localStorage.getItem("quicliker-save")||"null");if(s&&Array.isArray(s.owned)&&s.owned.length===items.length)game={...s}}catch(e){}
+const fmt=n=>Math.floor(n).toLocaleString("ru-RU");
+function save(){try{localStorage.setItem("quicliker-save",JSON.stringify(game))}catch(e){}}
+function render(){document.getElementById("coins").textContent=fmt(game.coins);document.getElementById("power").textContent=fmt(game.power);document.getElementById("pps").textContent=fmt(game.pps);
+document.getElementById("upgrades").innerHTML=items.map((it,i)=>{const cost=Math.floor(it.cost*Math.pow(1.17,game.owned[i]));return `<button class="upgrade" data-id="${i}" ${game.coins<cost?"disabled":""}><span class="ico">${it.icon}</span><span><b>${it.name}</b><small>${it.desc} · куплено: ${game.owned[i]}</small></span><em>${fmt(cost)} ◈</em></button>`}).join("")}
+document.getElementById("click").addEventListener("click",()=>{game.coins+=game.power;render();save()});
+document.getElementById("upgrades").addEventListener("click",e=>{const b=e.target.closest("[data-id]");if(!b)return;const i=Number(b.dataset.id),it=items[i],cost=Math.floor(it.cost*Math.pow(1.17,game.owned[i]));if(game.coins<cost)return;game.coins-=cost;game.owned[i]++;if(it.kind==="power")game.power+=it.value;else game.pps+=it.value;document.getElementById("message").textContent=`Улучшение «${it.name}» куплено!`;render();save()});
+document.getElementById("reset").addEventListener("click",()=>{if(!confirm("Точно сбросить весь прогресс Quicliker?"))return;game=fresh();save();render();document.getElementById("message").textContent="Начнём новую гонку за рекордом!"});
+setInterval(()=>{if(game.pps>0){game.coins+=game.pps;render();save()}},1000);render();
+</script><script>(function(){try{var v=localStorage.quiclikerVid||(localStorage.quiclikerVid=crypto.randomUUID());fetch("https://ahzyhwvhebgpywdullbr.supabase.co/rest/v1/rpc/track_visit",{method:"POST",headers:{apikey:"sb_publishable_4xonekMLJZMURlFD4UhfuA_aKgqXLvd","Content-Type":"application/json"},body:JSON.stringify({p_app:"quicliker",p_vid:v})}).catch(function(){})}catch(e){}})();</script>
+</body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Админ — обновления</title>
+<style>
+:root{--bg:#0a0a0f;--p:#14141c;--p2:#1c1c27;--t:#f3f3f7;--m:#8b8b9c;--a:#ff7a18;--line:#262633}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;padding:20px}
+.card{width:min(560px,100%);background:var(--p);border:1px solid var(--line);border-radius:20px;padding:24px}
+h1{font-size:20px;margin-bottom:14px}
+label{display:block;font-size:12px;color:var(--m);margin:12px 0 4px}
+input,select,textarea{width:100%;padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:var(--p2);color:var(--t);font:inherit}
+textarea{min-height:200px;font-family:ui-monospace,monospace;font-size:13px}
+.row{display:flex;align-items:center;gap:8px;margin-top:12px}.row input{width:auto}
+button{background:linear-gradient(90deg,#ff7a18,#ffb347);color:#fff;border:0;border-radius:12px;padding:12px 16px;font:inherit;font-weight:700;cursor:pointer;margin-top:12px}
+button.g{background:var(--p2)}
+.err{color:#ff7a7a;min-height:20px;font-size:13px}
+.note{color:var(--m);font-size:13px;margin-top:12px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="login">
+    <h1>Вход администратора</h1>
+    <label>Имя</label><input id="lu" autocomplete="username">
+    <label>Пароль</label><input id="lp" type="password" autocomplete="current-password">
+    <label>Ключ безопасности</label><input id="lk" type="password" inputmode="numeric" maxlength="6" autocomplete="off">
+    <button id="lgo">Войти</button>
+    <div class="err" id="lerr"></div>
+  </div>
+
+  <div id="panel" hidden>
+    <h1>Обновления</h1>
+    <p class="note">Сайт-хаб статический и не использует Netlify. Здесь формируется файл version.json: скопируйте его и замените им version.json в репозитории хаба. После сохранения (commit) все приложения увидят обновление.</p>
+    <label>Приложение</label>
+    <select id="app"><option value="quik">Quik</option><option value="tsm">TSMESEDJER</option></select>
+    <label>Новая версия (например 1.2.0)</label><input id="ver">
+    <label>Адрес нового сайта (куда перейдут пользователи)</label><input id="url" placeholder="https://...">
+    <label>Заметка (показывается на экране обновления, необязательно)</label><input id="notes" maxlength="200">
+    <div class="row"><input type="checkbox" id="force"><span>Принудительно (без кнопки «Позже»)</span></div>
+    <button id="gen">Сформировать version.json</button>
+    <label>Результат</label>
+    <textarea id="out" readonly></textarea>
+    <button class="g" id="copy">Скопировать</button>
+    <div class="err" id="perr"></div>
+  </div>
+</div>
+<script>
+/* Пароль и ключ проверяются в браузере: это удобство, а не защита. */
+const ADMIN_NAME="admin",ADMIN_PASS="admin2231",ADMIN_KEY="241575";
+let data=null;
+document.getElementById("lgo").onclick=async()=>{
+  const u=lu.value.trim(),p=lp.value,k=lk.value.trim();
+  if(u.toLowerCase()!==ADMIN_NAME||p!==ADMIN_PASS){lerr.textContent="Неверное имя или пароль";return}
+  if(k!==ADMIN_KEY){lerr.textContent="Неверный ключ безопасности";return}
+  sessionStorage.adminOk="1";show();
+};
+function show(){login.hidden=true;panel.hidden=false;loadCurrent()}
+async function loadCurrent(){
+  try{data=await (await fetch("version.json?t="+Date.now(),{cache:"no-store"})).json()}catch{data={}}
+  fill();
+}
+function fill(){const u=data[app.value]||{};ver.value=u.version||"";url.value=u.url||"";notes.value=u.notes||"";force.checked=!!u.force;out.value=JSON.stringify(data,null,2)}
+app.onchange=fill;
+gen.onclick=()=>{
+  perr.textContent="";
+  if(!/^\d+(\.\d+)*$/.test(ver.value.trim()))return perr.textContent="Версия: только цифры и точки, например 1.2.0";
+  if(!/^https:\/\//.test(url.value.trim()))return perr.textContent="Адрес должен начинаться с https://";
+  const cur=data[app.value]||{};
+  if(cur.version&&cur.version===ver.value.trim()&&cur.url===url.value.trim())return perr.textContent="Это уже опубликованная версия";
+  data[app.value]={version:ver.value.trim(),url:url.value.trim(),force:force.checked,notes:notes.value.trim()};
+  out.value=JSON.stringify(data,null,2);
+};
+copy.onclick=async()=>{await navigator.clipboard.writeText(out.value);perr.textContent="Скопировано"};
+if(sessionStorage.adminOk==="1")show();
+</script>
+</body>
+</html>

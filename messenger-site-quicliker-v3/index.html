@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080b14">
+<title>TSCO — Добро пожаловать</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080b14;--panel:rgba(18,25,43,.78);--panel2:#111a2d;
+  --text:#f4f7ff;--muted:#9aa8c2;--line:rgba(157,180,226,.16);
+  --cyan:#61e5ff;--violet:#9b8cff;--pink:#ff79bd;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;color:var(--text);
+  background:
+    radial-gradient(ellipse at 12% 5%,rgba(61,116,255,.22),transparent 35%),
+    radial-gradient(ellipse at 88% 18%,rgba(154,91,255,.16),transparent 32%),
+    linear-gradient(160deg,#080b14 0%,#0b1020 52%,#080b14 100%);
+  font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  overflow-x:hidden;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
+  background-image:linear-gradient(rgba(150,180,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(150,180,255,.045) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.wrap{position:relative;width:min(1120px,calc(100% - 40px));margin:0 auto;padding:30px 0 56px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 0 34px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:.16em;font-size:15px}
+.brand-mark{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));color:#07101c;font-weight:950;box-shadow:0 0 28px #61e5ff35}
+.nav{display:flex;gap:24px}.nav a{color:var(--muted);text-decoration:none;font-size:13px;transition:.2s}.nav a:hover{color:var(--cyan)}
+.hero{text-align:center;padding:65px 20px 82px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 13px;border:1px solid var(--line);border-radius:999px;
+  color:#b9c8e6;background:#111a2b99;font-size:12px;letter-spacing:.13em;text-transform:uppercase}
+.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+h1{font-size:clamp(48px,9vw,88px);line-height:1.04;letter-spacing:-.065em;margin:25px 0 18px;font-weight:850}
+h1 span{background:linear-gradient(100deg,#fff 10%,#9ceeff 48%,#b5a6ff 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:610px;margin:0 auto;color:var(--muted);font-size:clamp(15px,2vw,18px)}
+.section{padding:28px 0 48px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.kicker{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px}
+h2{font-size:clamp(25px,4vw,34px);letter-spacing:-.04em;line-height:1.2}
+.section-note{color:var(--muted);font-size:13px}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feature{min-height:178px;padding:23px 20px;border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(145deg,rgba(24,35,59,.85),rgba(13,19,34,.8));box-shadow:0 14px 40px #0002;transition:.25s}
+.feature:hover{transform:translateY(-5px);border-color:#61e5ff66}
+.feature-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;margin-bottom:17px;
+  color:var(--cyan);background:#61e5ff14;font-size:20px}
+.feature h3{font-size:16px;margin-bottom:6px}.feature p{font-size:13px;color:var(--muted)}
+.founders{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.person{padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:var(--panel);display:flex;align-items:center;gap:15px}
+.avatar{width:44px;height:44px;flex:none;border-radius:15px;display:grid;place-items:center;font-weight:850;color:#08101d;background:linear-gradient(135deg,#8deaff,#a99bff)}
+.person:nth-child(2) .avatar{background:linear-gradient(135deg,#ffb4d8,#a99bff)}
+.person strong{display:block;font-size:16px}.person small{color:var(--muted);font-size:12px}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.opt{--c:#ff3d9a;--c2:#ff8fc7;position:relative;display:flex;align-items:center;gap:18px;padding:24px;
+  min-height:132px;border:1px solid var(--line);border-radius:22px;text-decoration:none;color:var(--text);
+  background:linear-gradient(145deg,rgba(25,35,58,.95),rgba(13,19,34,.92));transition:.25s;overflow:hidden}
+.opt:after{content:"";position:absolute;width:180px;height:180px;right:-75px;top:-95px;border-radius:50%;background:var(--c);opacity:.09;filter:blur(5px)}
+.opt:hover{transform:translateY(-5px);border-color:var(--c);box-shadow:0 15px 45px #0004}
+.ic{position:relative;z-index:1;flex:none;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:25px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--c),var(--c2));box-shadow:0 8px 24px color-mix(in srgb,var(--c) 28%,transparent)}
+.product-copy{position:relative;z-index:1;min-width:0}.opt b{display:block;font-size:19px;letter-spacing:.01em}.opt small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.ver{margin-left:auto;font-size:11px;color:#b8c7e4;white-space:nowrap;position:relative;z-index:1}
+.last{font-size:11px;color:var(--cyan);margin-top:5px}.opt.dis{opacity:.42;pointer-events:none;filter:saturate(.5)}
+.special{margin-top:10px;padding:26px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(120deg,#121b30dd,#17152cdd);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.special h3{font-size:18px;margin-bottom:4px}.special p{font-size:13px;color:var(--muted)}
+.adm{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 18px;border-radius:13px;
+  border:1px solid #9b8cff66;background:#9b8cff16;color:#d8d0ff;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap;transition:.2s}
+.adm:hover{background:#9b8cff2b;border-color:#b4aaff}
+.pop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pop{position:relative;display:flex;flex-direction:column;gap:14px;padding:22px;min-height:172px;border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--text);background:linear-gradient(145deg,rgba(25,35,58,.95),rgba(13,19,34,.92));transition:.25s;overflow:hidden}
+.pop:hover{transform:translateY(-5px);border-color:var(--c);box-shadow:0 15px 45px #0004}
+.pop .rank{position:absolute;right:16px;top:14px;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--c);text-transform:uppercase}
+.pop .ic{width:50px;height:50px;font-size:22px}
+.pop b{font-size:17px}.pop small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px;line-height:1.45}
+.pop .go-l{margin-top:auto;font-size:12px;color:var(--c2);font-weight:700}
+.pop.dis{opacity:.42;pointer-events:none;filter:saturate(.5)}
+@media(max-width:800px){.pop-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.pop-grid{grid-template-columns:1fr}}
+.live{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}.live span{font-size:12.5px;color:var(--muted);padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:#111a2b99}.live .on::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#3ecf8e;margin-right:7px;box-shadow:0 0 10px #3ecf8e}
+.footer{padding-top:42px;text-align:center;color:#687792;font-size:11px;letter-spacing:.04em}
+@media(max-width:800px){.features{grid-template-columns:repeat(2,1fr)}.hero{padding:48px 12px 65px}}
+@media(max-width:560px){.wrap{width:min(100% - 28px,1120px);padding-top:18px}.nav{gap:13px}.nav a{font-size:11px}.topbar{padding-bottom:18px}.hero{padding:48px 5px 55px}.section{padding:22px 0 34px}.section-head{display:block}.section-note{margin-top:8px}.features{gap:10px}.feature{min-height:160px;padding:17px 15px}.feature-icon{margin-bottom:12px}.founders,.products{grid-template-columns:1fr}.person{padding:17px}.opt{padding:19px;min-height:116px}.special{align-items:flex-start;flex-direction:column;padding:21px}.adm{width:100%}.footer{padding-top:30px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">T</span><span>TSCO</span></div>
+    <nav class="nav"><a href="#advantages">Преимущества</a><a href="#founders">Основатели</a><a href="#products">Продукты</a><a href="#projects">Наши проекты</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">цифровая экосистема</div>
+      <h1><span>Добро пожаловать</span></h1>
+      <p>TSCO — пространство современных решений, созданных для удобного и комфортного общения.</p>
+      <div class="live" id="live"></div>
+    </section>
+
+    <section class="section" id="advantages">
+      <div class="section-head"><div><div class="kicker">Почему TSCO</div><h2>Преимущества</h2></div><div class="section-note">Технологии, на которые можно положиться</div></div>
+      <div class="features">
+        <article class="feature"><div class="feature-icon">⚡</div><h3>Быстрая работа системы</h3><p>Плавная работа и быстрый отклик интерфейса.</p></article>
+        <article class="feature"><div class="feature-icon">◈</div><h3>Шифрование</h3><p>Внимание к безопасности и защите ваших данных.</p></article>
+        <article class="feature"><div class="feature-icon">▣</div><h3>Оптимизация под телефоны</h3><p>Удобное использование на мобильных устройствах.</p></article>
+        <article class="feature"><div class="feature-icon">✦</div><h3>Хорошая поддержка</h3><p>Помощь и внимание к вопросам пользователей.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="founders">
+      <div class="section-head"><div><div class="kicker">Команда проекта</div><h2>Основатели</h2></div></div>
+      <div class="founders">
+        <div class="person"><div class="avatar">МН</div><div><strong>Матвей Нешитов</strong><small>Основатель</small></div></div>
+        <div class="person"><div class="avatar">МД</div><div><strong>Макар Дегтярев</strong><small>Основатель</small></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="section-head"><div><div class="kicker">Наши решения</div><h2>Наши продукты</h2></div><div class="section-note">Выберите продукт, чтобы продолжить</div></div>
+      <div class="products">
+        <a class="opt" id="o-quik" href="#" style="--c:#ff3d9a;--c2:#ff8fc7">
+          <div class="ic">Q</div><div class="product-copy"><b>Quik</b><small>Быстрый мессенджер · розовая, голубая и чёрная темы</small><div class="last" id="l-quik"></div></div><span class="ver" id="v-quik"></span>
+        </a>
+        <a class="opt" id="o-tsm" href="#" style="--c:#ff7a18;--c2:#ffb347">
+          <div class="ic">T</div><div class="product-copy"><b>TSMesedjer</b><small>Мессенджер с друзьями, группами, звонками и рынком</small><div class="last" id="l-tsm"></div></div><span class="ver" id="v-tsm"></span>
+        </a>
+      </div>
+    </section>
+
+
+    <section class="section" id="projects">
+      <div class="section-head"><div><div class="kicker">Игры и эксперименты</div><h2>Наши проекты</h2></div><div class="section-note">Попробуйте наши новые разработки</div></div>
+      <div class="products">
+        <a class="opt" href="quicliker.html" style="--c:#61e5ff;--c2:#9b8cff">
+          <div class="ic">Q</div><div class="product-copy"><b>Quicliker</b><small>Кликер с улучшениями, автоматическим заработком и прокачкой</small><div class="last">Играть бесплатно →</div></div><span class="ver">Игра</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="special">
+        <div><div class="kicker">Для команды</div><h3>Спец. инструменты</h3><p>Закрытый раздел для управления проектом.</p></div>
+        <a class="adm" href="admin.html">♙ Вход за админа</a>
+      </div>
+    </section>
+
+    <section class="section" id="popular">
+      <div class="section-head"><div><div class="kicker">Топ проектов</div><h2>Популярные проекты</h2></div><div class="section-note">Закреплённый админом — первым, далее по числу людей за сегодня</div></div>
+      <div class="pop-grid" id="popGrid"></div>
+    </section>
+  </main>
+  <footer class="footer">© TSCO · Современные решения для общения</footer>
+</div>
+<script>
+const SB="https://ahzyhwvhebgpywdullbr.supabase.co",KEY="sb_publishable_4xonekMLJZMURlFD4UhfuA_aKgqXLvd";
+const rpc=(fn,body)=>fetch(SB+"/rest/v1/rpc/"+fn,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify(body||{})})
+  .then(r=>{if(!r.ok)throw new Error(fn);return r.text().then(t=>t?JSON.parse(t):null)});
+const vid=()=>{let v=localStorage.hubVid;if(!v){v=crypto.randomUUID();localStorage.hubVid=v}return v};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const plural=n=>{const d=n%10,t=n%100;return d===1&&t!==11?"человек":(d>=2&&d<=4&&(t<12||t>14))?"человека":"человек"};
+const META={
+  quik:{name:"Quik",ic:"Q",c:"#ff3d9a",c2:"#ff8fc7",desc:"Быстрый мессенджер с чатами, звонками и балансом ◈"},
+  tsm:{name:"TSMesedjer",ic:"T",c:"#ff7a18",c2:"#ffb347",desc:"Мессенджер с друзьями, группами, звонками и рынком"},
+  quicliker:{name:"Quicliker",ic:"Q",c:"#61e5ff",c2:"#9b8cff",desc:"Кликер с улучшениями, автоматическим заработком и прокачкой",href:"quicliker.html"}
+};
+const urls={};
+
+/* продукты сверху: адреса из version.json */
+const verP=fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.json()).then(all=>{
+  for(const k of ["quik","tsm"]){const u=all[k],o=document.getElementById("o-"+k);
+    if(!u||!u.url||/YOUR-/.test(u.url)){o.classList.add("dis");continue}
+    urls[k]=u.url;o.href=u.url;document.getElementById("v-"+k).textContent="v"+u.version}
+  const L=localStorage.hubLast||"";if(L&&document.getElementById("l-"+L))document.getElementById("l-"+L).textContent="Вы входили здесь последний раз";
+}).catch(()=>document.querySelectorAll(".opt").forEach(o=>o.classList.add("dis")));
+document.querySelectorAll(".opt").forEach(a=>a.addEventListener("click",()=>{localStorage.hubLast=a.id.slice(2)}));
+
+/* популярные: закреплённый первым, затем по числу людей сегодня */
+function renderPop(rows){
+  const map=new Map((rows||[]).map(r=>[r.app,r]));
+  const list=Object.keys(META).map(k=>({k,users:map.get(k)?.users_today||0,pinned:!!map.get(k)?.pinned}));
+  list.sort((a,b)=>(b.pinned-a.pinned)||(b.users-a.users));
+  document.getElementById("popGrid").innerHTML=list.map((p,i)=>{
+    const m=META[p.k],href=m.href||urls[p.k]||"",dis=!href;
+    const badge=p.pinned?"📌 Закреплено администрацией":(p.users?"🔥 "+p.users+" "+plural(p.users)+" сегодня":"Сегодня пока без посещений");
+    return `<a class="pop${dis?" dis":""}" href="${esc(href||"#")}" style="--c:${m.c};--c2:${m.c2}"><span class="rank">#${i+1}</span><div class="ic">${m.ic}</div><div><b>${m.name}</b><small>${m.desc}</small></div><span class="go-l">${badge}</span></a>`
+  }).join("");
+}
+Promise.all([verP,rpc("app_popularity").catch(()=>[])]).then(([,rows])=>renderPop(rows));
+
+/* живая статистика: онлайн в Quik и уникальные люди за сегодня */
+Promise.all([rpc("online_count").catch(()=>null),rpc("site_daily_users").catch(()=>null)]).then(([o,d])=>{
+  document.getElementById("live").innerHTML=(typeof o==="number"?`<span class="on">${o} онлайн в Quik</span>`:"")+(typeof d==="number"?`<span>${d} ${plural(d)} сегодня на сайте</span>`:"");
+});
+setInterval(()=>rpc("online_count").then(o=>{const el=document.querySelector("#live .on");if(el&&typeof o==="number")el.textContent=o+" онлайн в Quik"}).catch(()=>{}),30000);
+rpc("track_visit",{p_app:"hub",p_vid:vid()}).catch(()=>{});
+</script>
+</body>
+</html>
